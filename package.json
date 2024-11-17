@@ -12,9 +12,14 @@
   },
   "dependencies": {
     "@biomejs/biome": "^1.9.4",
+    "class-variance-authority": "^0.7.0",
+    "clsx": "^2.1.1",
+    "lucide-react": "^0.460.0",
     "next": "latest",
     "react": "rc",
-    "react-dom": "rc"
+    "react-dom": "rc",
+    "tailwind-merge": "^2.5.4",
+    "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
     "typescript": "^5",

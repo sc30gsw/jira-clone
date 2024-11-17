@@ -6,12 +6,15 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "biome lint -- apply ./src",
+    "format": "biome format ./src --write",
+    "check:biome": "biome check --apply ./src"
   },
   "dependencies": {
-    "react": "19.0.0-rc-66855b96-20241106",
-    "react-dom": "19.0.0-rc-66855b96-20241106",
-    "next": "15.0.3"
+    "@biomejs/biome": "^1.9.4",
+    "next": "latest",
+    "react": "rc",
+    "react-dom": "rc"
   },
   "devDependencies": {
     "typescript": "^5",

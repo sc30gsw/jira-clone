@@ -10,6 +10,7 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
+import { useLogin } from '@/features/auth/api/use-login'
 import { useSafeForm } from '@/hooks/use-safe-form'
 import {
   type SignInInput,
@@ -18,6 +19,8 @@ import {
 import { zodResolver } from '@hookform/resolvers/zod'
 
 export const SignInForm = () => {
+  const { mutate } = useLogin()
+
   const form = useSafeForm<SignInInput>({
     resolver: zodResolver(signInInputSchema),
     defaultValues: {
@@ -27,7 +30,7 @@ export const SignInForm = () => {
   })
 
   const onSubmit = (data: SignInInput) => {
-    console.log(data)
+    mutate({ json: data })
   }
 
   return (

@@ -10,6 +10,7 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
+import { useRegister } from '@/features/auth/api/use-register'
 import { useSafeForm } from '@/hooks/use-safe-form'
 import {
   type SignUpInput,
@@ -18,6 +19,8 @@ import {
 import { zodResolver } from '@hookform/resolvers/zod'
 
 export const SignUpForm = () => {
+  const { mutate } = useRegister()
+
   const form = useSafeForm<SignUpInput>({
     resolver: zodResolver(signUpInputSchema),
     defaultValues: {
@@ -28,7 +31,7 @@ export const SignUpForm = () => {
   })
 
   const onSubmit = (data: SignUpInput) => {
-    console.log(data)
+    mutate({ json: data })
   }
 
   return (

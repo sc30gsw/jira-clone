@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
+import { QueryProvider } from '@/components/query-provider'
 import { cn } from '@/lib/utils'
 import type { ReactNode } from 'react'
 
@@ -15,7 +16,7 @@ const RootLayout = ({ children }: Readonly<{ children: ReactNode }>) => {
   return (
     <html lang="ja">
       <body className={cn(inter.className, 'antialiased min-h-screen')}>
-        {children}
+        <QueryProvider>{children}</QueryProvider>
       </body>
     </html>
   )

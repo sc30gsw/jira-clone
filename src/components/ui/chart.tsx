@@ -1,22 +1,28 @@
 'use client'
 
-import * as React from 'react'
+// biome-ignore lint/style/noNamespaceImport: this is a third party library
 import * as RechartsPrimitive from 'recharts'
-import {
-  NameType,
-  Payload,
-  ValueType,
-} from 'recharts/types/component/DefaultTooltipContent'
 
 import { cn } from '@/lib/utils'
+import {
+  type CSSProperties,
+  type ComponentProps,
+  type ComponentType,
+  type ReactNode,
+  createContext,
+  forwardRef,
+  useContext,
+  useId,
+  useMemo,
+} from 'react'
 
 // Format: { THEME_NAME: CSS_SELECTOR }
 const THEMES = { light: '', dark: '.dark' } as const
 
 export type ChartConfig = {
-  [k in string]: {
-    label?: React.ReactNode
-    icon?: React.ComponentType
+  [K in string]: {
+    label?: ReactNode
+    icon?: ComponentType
   } & (
     | { color?: string; theme?: never }
     | { color?: never; theme: Record<keyof typeof THEMES, string> }
@@ -27,10 +33,10 @@ type ChartContextProps = {
   config: ChartConfig
 }
 
-const ChartContext = React.createContext<ChartContextProps | null>(null)
+const ChartContext = createContext<ChartContextProps | null>(null)
 
 function useChart() {
-  const context = React.useContext(ChartContext)
+  const context = useContext(ChartContext)
 
   if (!context) {
     throw new Error('useChart must be used within a <ChartContainer />')
@@ -39,16 +45,16 @@ function useChart() {
   return context
 }
 
-const ChartContainer = React.forwardRef<
+const ChartContainer = forwardRef<
   HTMLDivElement,
-  React.ComponentProps<'div'> & {
+  ComponentProps<'div'> & {
     config: ChartConfig
-    children: React.ComponentProps<
+    children: ComponentProps<
       typeof RechartsPrimitive.ResponsiveContainer
     >['children']
   }
 >(({ id, className, children, config, ...props }, ref) => {
-  const uniqueId = React.useId()
+  const uniqueId = useId()
   const chartId = `chart-${id || uniqueId.replace(/:/g, '')}`
 
   return (
@@ -77,12 +83,14 @@ const ChartStyle = ({ id, config }: { id: string; config: ChartConfig }) => {
     ([_, config]) => config.theme || config.color,
   )
 
+  // biome-ignore lint/style/useExplicitLengthCheck: this is a third party library
   if (!colorConfig.length) {
     return null
   }
 
   return (
     <style
+      // biome-ignore lint/security/noDangerouslySetInnerHtml: this is a third party library
       dangerouslySetInnerHTML={{
         __html: Object.entries(THEMES)
           .map(
@@ -107,10 +115,10 @@ ${colorConfig
 
 const ChartTooltip = RechartsPrimitive.Tooltip
 
-const ChartTooltipContent = React.forwardRef<
+const ChartTooltipContent = forwardRef<
   HTMLDivElement,
-  React.ComponentProps<typeof RechartsPrimitive.Tooltip> &
-    React.ComponentProps<'div'> & {
+  ComponentProps<typeof RechartsPrimitive.Tooltip> &
+    ComponentProps<'div'> & {
       hideLabel?: boolean
       hideIndicator?: boolean
       indicator?: 'line' | 'dot' | 'dashed'
@@ -138,7 +146,8 @@ const ChartTooltipContent = React.forwardRef<
   ) => {
     const { config } = useChart()
 
-    const tooltipLabel = React.useMemo(() => {
+    const tooltipLabel = useMemo(() => {
+      // biome-ignore lint/style/useExplicitLengthCheck: this is a third party library
       if (hideLabel || !payload?.length) {
         return null
       }
@@ -174,7 +183,8 @@ const ChartTooltipContent = React.forwardRef<
       labelKey,
     ])
 
-    if (!active || !payload?.length) {
+    // biome-ignore lint/style/useExplicitLengthCheck: this is a third party library
+    if (!(active && payload?.length)) {
       return null
     }
 
@@ -188,8 +198,9 @@ const ChartTooltipContent = React.forwardRef<
           className,
         )}
       >
-        {!nestLabel ? tooltipLabel : null}
+        {nestLabel ? null : tooltipLabel}
         <div className="grid gap-1.5">
+          {/* biome-ignore lint/complexity/noExcessiveCognitiveComplexity: this is a third party library */}
           {payload.map((item, index) => {
             const key = `${nameKey || item.name || item.dataKey || 'value'}`
             const itemConfig = getPayloadConfigFromPayload(config, item, key)
@@ -226,7 +237,7 @@ const ChartTooltipContent = React.forwardRef<
                             {
                               '--color-bg': indicatorColor,
                               '--color-border': indicatorColor,
-                            } as React.CSSProperties
+                            } as CSSProperties
                           }
                         />
                       )
@@ -263,9 +274,9 @@ ChartTooltipContent.displayName = 'ChartTooltip'
 
 const ChartLegend = RechartsPrimitive.Legend
 
-const ChartLegendContent = React.forwardRef<
+const ChartLegendContent = forwardRef<
   HTMLDivElement,
-  React.ComponentProps<'div'> &
+  ComponentProps<'div'> &
     Pick<RechartsPrimitive.LegendProps, 'payload' | 'verticalAlign'> & {
       hideIcon?: boolean
       nameKey?: string
@@ -277,6 +288,7 @@ const ChartLegendContent = React.forwardRef<
   ) => {
     const { config } = useChart()
 
+    // biome-ignore lint/style/useExplicitLengthCheck: this is a third party library
     if (!payload?.length) {
       return null
     }

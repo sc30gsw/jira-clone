@@ -1,7 +1,8 @@
 'use client'
 
-import * as React from 'react'
+// biome-ignore lint/style/noNamespaceImport: this is a third party library
 import * as AvatarPrimitive from '@radix-ui/react-avatar'
+import React from 'react'
 
 import { cn } from '@/lib/utils'
 

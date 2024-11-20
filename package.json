@@ -33,6 +33,7 @@
     "lucide-react": "^0.460.0",
     "next": "latest",
     "next-themes": "^0.4.3",
+    "node-appwrite": "^14.1.0",
     "react": "rc",
     "react-day-picker": "8.10.1",
     "react-dom": "rc",

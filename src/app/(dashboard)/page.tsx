@@ -1,5 +1,4 @@
 import { getLoggedInUser } from '@/features/auth/action'
-import { UserButton } from '@/features/auth/components/user-button'
 import { redirect } from 'next/navigation'
 
 const Home = async () => {
@@ -9,11 +8,7 @@ const Home = async () => {
     redirect('/sign-in')
   }
 
-  return (
-    <div>
-      <UserButton />
-    </div>
-  )
+  return <div>This is a home page</div>
 }
 
 export default Home

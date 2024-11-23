@@ -6,7 +6,6 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
-import { OauthButtons } from '@/features/auth/components/oauth-buttons'
 import { SignUpForm } from '@/features/auth/components/sign-up-form'
 import Link from 'next/link'
 
@@ -26,15 +25,7 @@ export const SignUpCard = () => {
       <div className="px-7">
         <DottedSeparator />
       </div>
-      <CardContent className="p-7">
-        <SignUpForm />
-      </CardContent>
-      <div className="px-7">
-        <DottedSeparator />
-      </div>
-      <CardContent className="p-7 flex flex-col gap-y-4">
-        <OauthButtons />
-      </CardContent>
+      <SignUpForm />
       <div className="px-7">
         <DottedSeparator />
       </div>

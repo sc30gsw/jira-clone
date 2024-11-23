@@ -19,7 +19,7 @@ import {
 import { zodResolver } from '@hookform/resolvers/zod'
 
 export const SignUpForm = () => {
-  const { mutate } = useRegister()
+  const { mutate, isPending } = useRegister()
 
   const form = useSafeForm<SignUpInput>({
     resolver: zodResolver(signUpInputSchema),
@@ -43,7 +43,12 @@ export const SignUpForm = () => {
           render={({ field }) => (
             <FormItem>
               <FormControl>
-                <Input {...field} type="text" placeholder="Enter name" />
+                <Input
+                  {...field}
+                  type="text"
+                  placeholder="Enter name"
+                  disabled={isPending}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -59,6 +64,7 @@ export const SignUpForm = () => {
                   {...field}
                   type="email"
                   placeholder="Enter email address"
+                  disabled={isPending}
                 />
               </FormControl>
               <FormMessage />
@@ -75,13 +81,19 @@ export const SignUpForm = () => {
                   {...field}
                   type="password"
                   placeholder="Enter password"
+                  disabled={isPending}
                 />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
-        <Button type="submit" disabled={false} size={'lg'} className="w-full">
+        <Button
+          type="submit"
+          disabled={isPending}
+          size={'lg'}
+          className="w-full"
+        >
           Sign up
         </Button>
       </form>

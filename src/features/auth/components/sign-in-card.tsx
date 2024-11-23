@@ -1,6 +1,5 @@
 import { DottedSeparator } from '@/components/dotted-esparator'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { OauthButtons } from '@/features/auth/components/oauth-buttons'
 import { SignInForm } from '@/features/auth/components/sign-in-form'
 import Link from 'next/link'
 
@@ -13,15 +12,7 @@ export const SignInCard = () => {
       <div className="px-7">
         <DottedSeparator />
       </div>
-      <CardContent className="p-7">
-        <SignInForm />
-      </CardContent>
-      <div className="px-7">
-        <DottedSeparator />
-      </div>
-      <CardContent className="p-7 flex flex-col gap-y-4">
-        <OauthButtons />
-      </CardContent>
+      <SignInForm />
       <div className="px-7">
         <DottedSeparator />
       </div>

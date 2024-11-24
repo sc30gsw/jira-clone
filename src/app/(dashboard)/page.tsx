@@ -1,4 +1,5 @@
 import { getLoggedInUser } from '@/features/auth/action'
+import { CreateWorkspaceForm } from '@/features/workspaces/components/create-workspace-form'
 import { redirect } from 'next/navigation'
 
 const Home = async () => {
@@ -8,7 +9,11 @@ const Home = async () => {
     redirect('/sign-in')
   }
 
-  return <div>This is a home page</div>
+  return (
+    <div className="bg-neutral-500 p-4 h-full">
+      <CreateWorkspaceForm />
+    </div>
+  )
 }
 
 export default Home

@@ -1,6 +1,6 @@
 import { DATABASE_ID, WORKSPACES_ID } from '@/config'
-import { createWorkspaceSchema } from '@/features/workspaces/schema'
 import { sessionMiddleware } from '@/lib/session-middleware'
+import { createWorkspaceSchema } from '@/types/schemas/workspaces/craete-workspaces-schema'
 import { zValidator } from '@hono/zod-validator'
 import { Hono } from 'hono'
 import { ID } from 'node-appwrite'

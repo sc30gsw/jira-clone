@@ -14,11 +14,11 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { useCreateWorkspace } from '@/features/workspaces/api/use-create-workspace'
+import { useSafeForm } from '@/hooks/use-safe-form'
 import {
   type CreateWorkspaceSchema,
   createWorkspaceSchema,
-} from '@/features/workspaces/schema'
-import { useSafeForm } from '@/hooks/use-safe-form'
+} from '@/types/schemas/workspaces/craete-workspaces-schema'
 import { zodResolver } from '@hookform/resolvers/zod'
 
 type CreateWorkspaceFormProps = {

@@ -48,7 +48,15 @@ export const CreateWorkspaceForm = ({ onCancel }: CreateWorkspaceFormProps) => {
       image: data.image instanceof File ? data.image : '',
     }
 
-    mutate({ form: formData })
+    mutate(
+      { form: formData },
+      {
+        onSuccess: () => {
+          form.reset()
+          // TODO: Redirect to new workspace
+        },
+      },
+    )
   }
 
   const handleImageChange: ComponentProps<'input'>['onChange'] = (e) => {

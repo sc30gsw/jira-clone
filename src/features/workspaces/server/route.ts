@@ -20,10 +20,13 @@ const app = new Hono().post(
 
     if (image instanceof Blob) {
       const fileId = ID.unique()
+      // ファイル拡張子取得
       const extStr = image.type.split('/')[1]
 
+      // ファイル作成
       const uploadFile = new File(
         [image],
+        // 拡張子にsvgが含まれている場合はsvgにする
         `${fileId}.${extStr.indexOf('svg') !== -1 ? 'svg' : extStr}`,
         { type: image.type },
       )

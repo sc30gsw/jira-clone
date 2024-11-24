@@ -18,6 +18,7 @@ const app = new Hono().post(
 
     let uploadedImageUrl: string | undefined
 
+    // https://github.com/honojs/hono/issues/3513
     if (image instanceof Blob) {
       const fileId = ID.unique()
       // ファイル拡張子取得

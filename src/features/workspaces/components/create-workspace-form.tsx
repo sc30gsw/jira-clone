@@ -2,6 +2,7 @@
 
 import '@/zod-error-map-utils'
 import { DottedSeparator } from '@/components/dotted-esparator'
+import { Avatar, AvatarFallback } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import {
@@ -20,6 +21,9 @@ import {
   createWorkspaceSchema,
 } from '@/types/schemas/workspaces/craete-workspaces-schema'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { ImageIcon } from 'lucide-react'
+import Image from 'next/image'
+import { type ComponentProps, useRef } from 'react'
 
 type CreateWorkspaceFormProps = {
   onCancel?: () => void
@@ -28,15 +32,31 @@ type CreateWorkspaceFormProps = {
 export const CreateWorkspaceForm = ({ onCancel }: CreateWorkspaceFormProps) => {
   const { mutate, isPending } = useCreateWorkspace()
 
+  const inputRef = useRef<HTMLInputElement>(null)
+
   const form = useSafeForm<CreateWorkspaceSchema>({
     resolver: zodResolver(createWorkspaceSchema),
     defaultValues: {
       name: '',
+      image: '',
     },
   })
 
   const onSubmit = (data: CreateWorkspaceSchema) => {
-    mutate({ json: data })
+    const formData = {
+      ...data,
+      image: data.image instanceof File ? data.image : '',
+    }
+
+    mutate({ form: formData })
+  }
+
+  const handleImageChange: ComponentProps<'input'>['onChange'] = (e) => {
+    const file = e.target.files?.[0]
+
+    if (file) {
+      form.setValue('image', file)
+    }
   }
 
   return (
@@ -68,6 +88,64 @@ export const CreateWorkspaceForm = ({ onCancel }: CreateWorkspaceFormProps) => {
                     </FormControl>
                     <FormMessage />
                   </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="image"
+                render={({ field }) => (
+                  <div className="flex flex-col gap-y-2">
+                    <div className="flex items-center gap-x-5">
+                      {field.value ? (
+                        <div className="size-[72px] relative rounded-md overflow-hidden">
+                          <Image
+                            src={
+                              field.value instanceof Blob
+                                ? URL.createObjectURL(
+                                    new File([field.value], 'image', {
+                                      type: field.value.type,
+                                    }),
+                                  )
+                                : field.value
+                            }
+                            alt="Logo"
+                            fill={true}
+                            className="object-cover"
+                          />
+                        </div>
+                      ) : (
+                        <Avatar className="size-[72px]">
+                          <AvatarFallback>
+                            <ImageIcon className="size-[36px] text-neutral-400" />
+                          </AvatarFallback>
+                        </Avatar>
+                      )}
+                      <div className="flex flex-col">
+                        <p className="text-sm">Workspace Icon</p>
+                        <p className="text-sm text-muted-foreground">
+                          JPG, PNG, SVG or JPEG, max 1mb
+                        </p>
+                        <Input
+                          type="file"
+                          ref={inputRef}
+                          accept=".jpg,.jpeg,.png,.svg"
+                          disabled={isPending}
+                          className="hidden"
+                          onChange={handleImageChange}
+                        />
+                        <Button
+                          type="button"
+                          disabled={isPending}
+                          variant={'tertiary'}
+                          size={'xs'}
+                          className="w-fit mt-2"
+                          onClick={() => inputRef.current?.click()}
+                        >
+                          Upload Image
+                        </Button>
+                      </div>
+                    </div>
+                  </div>
                 )}
               />
             </div>

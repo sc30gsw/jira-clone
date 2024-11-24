@@ -7,6 +7,7 @@ type DottedSeparatorProps = {
   dotSize?: string
   gapSize?: string
   direction?: 'horizontal' | 'vertical'
+  callFromServer?: boolean
 }
 
 export const DottedSeparator = ({
@@ -16,6 +17,7 @@ export const DottedSeparator = ({
   dotSize = '2px',
   gapSize = '6px',
   direction = 'horizontal',
+  callFromServer,
 }: DottedSeparatorProps) => {
   const isHorizontal = direction === 'horizontal'
 
@@ -25,6 +27,7 @@ export const DottedSeparator = ({
         isHorizontal
           ? 'w-full flex items-center'
           : 'h-ful flex flex-col items-center',
+        callFromServer ? 'my-4' : '',
         className,
       )}
     >

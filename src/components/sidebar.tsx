@@ -9,7 +9,7 @@ export const Sidebar = () => {
       <Link href={'/'}>
         <Image src={'/logo.svg'} alt="logo" width={164} height={48} />
       </Link>
-      <DottedSeparator className="my-4" />
+      <DottedSeparator callFromServer={true} />
       <Navigation />
     </aside>
   )

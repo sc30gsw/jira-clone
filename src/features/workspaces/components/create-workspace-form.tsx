@@ -16,6 +16,7 @@ import {
 import { Input } from '@/components/ui/input'
 import { useCreateWorkspace } from '@/features/workspaces/api/use-create-workspace'
 import { useSafeForm } from '@/hooks/use-safe-form'
+import { cn } from '@/lib/utils'
 import {
   type CreateWorkspaceSchema,
   createWorkspaceSchema,
@@ -53,10 +54,9 @@ export const CreateWorkspaceForm = ({ onCancel }: CreateWorkspaceFormProps) => {
     mutate(
       { form: formData },
       {
-        onSuccess: () => {
+        onSuccess: ({ workspace }) => {
           form.reset()
-          router.refresh()
-          // TODO: Redirect to new workspace
+          router.push(`/workspaces/${workspace.$id}`)
         },
       },
     )
@@ -168,6 +168,7 @@ export const CreateWorkspaceForm = ({ onCancel }: CreateWorkspaceFormProps) => {
                 variant={'secondary'}
                 onClick={onCancel}
                 disabled={isPending}
+                className={cn(!onCancel && 'invisible')}
               >
                 Cancel
               </Button>

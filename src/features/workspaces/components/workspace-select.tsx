@@ -1,24 +1,47 @@
-'use client'
-
 import {
   Select,
   SelectContent,
+  SelectItem,
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import type { ReactNode } from 'react'
+import { WorkspaceAvatar } from '@/features/workspaces/components/workspace-avatar'
+import type { client } from '@/lib/rpc'
+import type { InferResponseType } from 'hono'
+import { useParams, useRouter } from 'next/navigation'
 
 type WorkspaceSelectProps = {
-  children: ReactNode
+  workspaces: InferResponseType<
+    typeof client.api.workspaces.$get
+  >['workspaces']['documents']
 }
 
-export const WorkspaceSelect = ({ children }: WorkspaceSelectProps) => {
+export const WorkspaceSelect = ({ workspaces }: WorkspaceSelectProps) => {
+  const router = useRouter()
+  const params = useParams()
+
+  const onSelect = (id: string) => {
+    router.push(`/workspaces/${id}`)
+  }
+
   return (
-    <Select>
+    <Select onValueChange={onSelect} value={params.workspaceId as string}>
       <SelectTrigger className="w-full bg-neutral-200 font-medium p-1">
         <SelectValue placeholder="No workspace selected" />
       </SelectTrigger>
-      <SelectContent>{children}</SelectContent>
+      <SelectContent>
+        {workspaces.map((workspace) => (
+          <SelectItem key={workspace.$id} value={workspace.$id}>
+            <div className="flex justify-start items-center gap-3 font-medium">
+              <WorkspaceAvatar
+                name={workspace.name}
+                image={workspace.imageUrl}
+              />
+              <span className="truncate">{workspace.name}</span>
+            </div>
+          </SelectItem>
+        ))}
+      </SelectContent>
     </Select>
   )
 }

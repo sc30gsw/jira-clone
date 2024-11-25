@@ -35,6 +35,28 @@ const app = new Hono()
 
     return c.json({ workspaces })
   })
+  .get('/:workspaceId', sessionMiddleware, async (c) => {
+    const databases = c.get('databases')
+    const user = c.get('user')
+
+    const workspaceId = c.req.param('workspaceId')
+
+    const members = await databases.listDocuments(DATABASE_ID, MEMBERS_ID, [
+      Query.equal('userId', user.$id),
+    ])
+
+    if (members.total === 0) {
+      return c.json({ workspace: null })
+    }
+
+    const workspace = await databases.getDocument(
+      DATABASE_ID,
+      WORKSPACES_ID,
+      workspaceId,
+    )
+
+    return c.json({ workspace })
+  })
   .post(
     '/',
     zValidator('form', createWorkspaceSchema),

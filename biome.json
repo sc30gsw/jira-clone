@@ -46,12 +46,14 @@
         "not-found.tsx",
         "middleware.ts",
         "default.tsx",
-        "route.ts"
+        "route.ts",
+        "lib/fetcher.ts"
       ],
       "linter": {
         "rules": {
           "style": {
-            "noDefaultExport": "off"
+            "noDefaultExport": "off",
+            "useNamingConvention": "off"
           }
         }
       }

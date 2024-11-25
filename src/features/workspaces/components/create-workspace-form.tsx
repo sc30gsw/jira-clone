@@ -23,6 +23,7 @@ import {
 import { zodResolver } from '@hookform/resolvers/zod'
 import { ImageIcon } from 'lucide-react'
 import Image from 'next/image'
+import { useRouter } from 'next/navigation'
 import { type ComponentProps, useRef } from 'react'
 
 type CreateWorkspaceFormProps = {
@@ -31,6 +32,7 @@ type CreateWorkspaceFormProps = {
 
 export const CreateWorkspaceForm = ({ onCancel }: CreateWorkspaceFormProps) => {
   const { mutate, isPending } = useCreateWorkspace()
+  const router = useRouter()
 
   const inputRef = useRef<HTMLInputElement>(null)
 
@@ -53,6 +55,7 @@ export const CreateWorkspaceForm = ({ onCancel }: CreateWorkspaceFormProps) => {
       {
         onSuccess: () => {
           form.reset()
+          router.refresh()
           // TODO: Redirect to new workspace
         },
       },

@@ -18,7 +18,7 @@ import { useSafeForm } from '@/hooks/use-safe-form'
 import {
   type SignInInput,
   signInInputSchema,
-} from '@/types/schemas/sign-in-input-schema'
+} from '@/types/schemas/auth/sign-in-input-schema'
 import { zodResolver } from '@hookform/resolvers/zod'
 
 export const SignInForm = () => {

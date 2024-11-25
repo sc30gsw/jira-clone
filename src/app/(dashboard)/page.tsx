@@ -1,5 +1,5 @@
 import { getLoggedInUser } from '@/features/auth/action'
-import { UserButton } from '@/features/auth/components/user-button'
+import { CreateWorkspaceForm } from '@/features/workspaces/components/create-workspace-form'
 import { redirect } from 'next/navigation'
 
 const Home = async () => {
@@ -10,8 +10,8 @@ const Home = async () => {
   }
 
   return (
-    <div>
-      <UserButton />
+    <div className="bg-neutral-500 p-4 h-full">
+      <CreateWorkspaceForm />
     </div>
   )
 }

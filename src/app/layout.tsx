@@ -4,6 +4,7 @@ import './globals.css'
 import { QueryProvider } from '@/components/query-provider'
 import { Toaster } from '@/components/ui/sonner'
 import { cn } from '@/lib/utils'
+import { NuqsAdapter } from 'nuqs/adapters/next/app'
 import type { ReactNode } from 'react'
 
 const inter = Inter({ subsets: ['latin'] })
@@ -18,8 +19,10 @@ const RootLayout = ({ children }: Readonly<{ children: ReactNode }>) => {
     <html lang="ja">
       <body className={cn(inter.className, 'antialiased min-h-screen')}>
         <QueryProvider>
-          <Toaster />
-          {children}
+          <NuqsAdapter>
+            <Toaster />
+            {children}
+          </NuqsAdapter>
         </QueryProvider>
       </body>
     </html>

@@ -20,6 +20,10 @@ export const WorkspaceSelectContentItem = async () => {
 
   const { workspaces } = res.data
 
+  if (!Array.isArray(workspaces.documents)) {
+    return null
+  }
+
   return workspaces.documents.map((workspace) => (
     <SelectItem key={workspace.$id} value={workspace.$id}>
       <div className="flex justify-start items-center gap-3 font-medium">
